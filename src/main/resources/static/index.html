@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>Bestilling av kinobiletter</h1>
+    <!--
+    Blw form never submitted, still seems the logical container for our inputs
+    Name regex inspired by https://a-tokyo.medium.com/first-and-last-name-validation-for-forms-and-databases-d3edf29ad29d
+    Custom phone regex loosely accepts a variety of formats
+    Email validation delegated to browser using type=email
+    -->
+    <form id="ticket">
+      <ul>
+        <li>
+          <label for="movie">Film</label>
+          <select id="movie" name="movie" required>
+            <option value="" hidden>--Velg film her--</option>
+          </select>
+          <span id="error-movie" class="error" aria-live="polite"></span>
+        </li>
+        <li>
+          <label for="number">Antall</label>
+          <input type="text" inputmode="numeric" id="number" name="number"
+                 pattern="[1-9]\d*" maxlength="3" required>
+          <span id="error-number" class="error" aria-live="polite"></span>
+        </li>
+        <li>
+          <ul class="userdata">
+            <li>
+              <label for="firstname">Fornavn</label>
+              <input type="text" id="firstname" name="firstname"
+                     pattern="^([a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+)*[.]{0,1}){1,2}$"
+                     required>
+              <span id="error-firstname" class="error" aria-live="polite"></span>
+            </li>
+            <li>
+              <label for="lastname">Etternavn</label>
+              <input type="text" id="lastname" name="lastname"
+                     pattern="^([a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+)*[.]{0,1}){1,2}$"
+                     required>
+              <span id="error-lastname" class="error" aria-live="polite"></span>
+            </li>
+            <li>
+              <label for="phone-number">Telefonnr</label>
+              <input type="tel" id="phone-number" name="phone-number"
+                     pattern="^\s*(\d{1,4}[.\-\s]{0,1}){1,5}\d{1,4}\s*$">
+              <span id="error-phone-number" class="error" aria-live="polite"></span>
+            </li>
+            <li>
+              <label for="email">Epost</label>
+              <input type="email" id="email" name="email" required>
+              <span id="error-email" class="error" aria-live="polite"></span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </form>
+    <button type="button" id="buy-ticket" form="ticket">Kjøp bilett</button>
+    <h2>Alle billetter</h2>
+    <table>
+      <caption>Alle dine billetter</caption>
+      <colgroup>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">Film</th>
+          <th scope="col">Antall</th>
+          <th scope="col">Fornavn</th>
+          <th scope="col">Etternavn</th>
+          <th scope="col">Telefonnr</th>
+          <th scope="col">Epost</th>
+        </tr>
+      </thead>
+      <tbody id="all-tickets" aria-live="polite">
+      </tbody>
+    </table>
+    <button id="delete-tickets">Slett alle billettene</button>
+  </main>
+</body>
+</html>
