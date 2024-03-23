@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
   <link rel="stylesheet" href="style.css">
-  <script src="main.js" defer></script>
+  <script type="module" src="main.js"></script>
 </head>
 <body>
   <main>
-    <h1>Bestilling av kinobiletter</h1>
+    <h1>Buy tickets</h1>
     <!--
     Blw form never submitted, still seems the logical container for our inputs
     Name regex inspired by https://a-tokyo.medium.com/first-and-last-name-validation-for-forms-and-databases-d3edf29ad29d
@@ -18,14 +18,14 @@
     <form id="ticket">
       <ul>
         <li>
-          <label for="movie">Film</label>
+          <label for="movie">Movie</label>
           <select id="movie" name="movie" required>
-            <option value="" hidden>--Velg film her--</option>
+            <option value="" hidden>--Select movie--</option>
           </select>
           <span id="error-movie" class="error" aria-live="polite"></span>
         </li>
         <li>
-          <label for="number">Antall</label>
+          <label for="number">Number</label>
           <input type="text" inputmode="numeric" id="number" name="number"
                  pattern="[1-9]\d*" maxlength="3" required>
           <span id="error-number" class="error" aria-live="polite"></span>
@@ -33,27 +33,27 @@
         <li>
           <ul class="userdata">
             <li>
-              <label for="firstname">Fornavn</label>
+              <label for="firstname">Firstname</label>
               <input type="text" id="firstname" name="firstname"
                      pattern="^([a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+)*[.]{0,1}){1,2}$"
                      required>
               <span id="error-firstname" class="error" aria-live="polite"></span>
             </li>
             <li>
-              <label for="lastname">Etternavn</label>
+              <label for="lastname">Lastname</label>
               <input type="text" id="lastname" name="lastname"
                      pattern="^([a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+)*[.]{0,1}){1,2}$"
                      required>
               <span id="error-lastname" class="error" aria-live="polite"></span>
             </li>
             <li>
-              <label for="phone-number">Telefonnr</label>
+              <label for="phone-number">Phone number</label>
               <input type="tel" id="phone-number" name="phone-number"
                      pattern="^\s*(\d{1,4}[.\-\s]{0,1}){1,5}\d{1,4}\s*$">
               <span id="error-phone-number" class="error" aria-live="polite"></span>
             </li>
             <li>
-              <label for="email">Epost</label>
+              <label for="email">Email</label>
               <input type="email" id="email" name="email" required>
               <span id="error-email" class="error" aria-live="polite"></span>
             </li>
@@ -61,10 +61,10 @@
         </li>
       </ul>
     </form>
-    <button type="button" id="buy-ticket" form="ticket">Kjøp bilett</button>
-    <h2>Alle billetter</h2>
+    <button type="button" id="buy-ticket" form="ticket">Buy ticket</button>
+    <h2>All tickets</h2>
     <table>
-      <caption>Alle dine billetter</caption>
+      <caption>All your tickets</caption>
       <colgroup>
         <col>
         <col>
@@ -75,18 +75,18 @@
       </colgroup>
       <thead>
         <tr>
-          <th scope="col">Film</th>
-          <th scope="col">Antall</th>
-          <th scope="col">Fornavn</th>
-          <th scope="col">Etternavn</th>
-          <th scope="col">Telefonnr</th>
-          <th scope="col">Epost</th>
+          <th scope="col">Movie</th>
+          <th scope="col">Number</th>
+          <th scope="col">Firstname</th>
+          <th scope="col">Lastname</th>
+          <th scope="col">Phone number</th>
+          <th scope="col">Email</th>
         </tr>
       </thead>
       <tbody id="all-tickets" aria-live="polite">
       </tbody>
     </table>
-    <button id="delete-tickets">Slett alle billettene</button>
+    <button id="delete-tickets">Delete all tickets</button>
   </main>
 </body>
 </html>
