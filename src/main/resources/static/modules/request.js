@@ -20,15 +20,7 @@ class HTTPError extends Error {
 }
 
 
-function httpJSONRequest(urlStr, method, requestHeaders, requestBody) {
-    let options = {};
-    options.method = method;
-    if (requestHeaders) {
-        options.headers = requestHeaders;
-    }
-    if (requestBody) {
-        options.body = requestBody;
-    }
+function request(urlStr, options) {
     return fetch(urlStr, options)
         .then(response => {
             if (!response.ok) {
@@ -49,20 +41,4 @@ function httpJSONRequest(urlStr, method, requestHeaders, requestBody) {
             }
             return null;
         })
-}
-
-
-function getJSON(urlStr) {
-    return httpJSONRequest(urlStr, "GET")
-}
-
-
-function postJSON(urlStr, obj) {
-    let headers = new Headers({"Content-Type": "application/json"});
-    return httpJSONRequest(urlStr, "POST", headers, JSON.stringify(obj));
-}
-
-
-function deleteJSON(urlStr) {
-    return httpJSONRequest(urlStr, "DELETE");
 }
