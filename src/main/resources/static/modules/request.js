@@ -1,4 +1,4 @@
-export {getJSON, postJSON, deleteJSON};
+export {request, HTTPError};
 
 
 class HTTPError extends Error {
@@ -8,15 +8,20 @@ class HTTPError extends Error {
         this.response = response;
     }
 
-    // Log the error whenever the response body is ready
-    logWhenReady() {
-        this.response.text()
-            .then(text => {
-                console.error(
-                    this.name, this.message, "\n  response body:", text
-                );
-            })
+    responseText() {
+        return this.response.text();
     }
+}
+
+
+function logException(urlStr, options, exc, additional) {
+    console.group("Error requesting resource:", urlStr);
+    console.error(exc);
+    console.log("options:", options);
+    if (additional) {
+        console.log(additional);
+    }
+    console.groupEnd();
 }
 
 
@@ -28,17 +33,21 @@ function request(urlStr, options) {
             }
             let type = response.headers.get("content-type");
             if (type !== "application/json") {
-                throw new TypeError(`Expected JSON, got ${type}`);
+                throw new TypeError(`Expected json, got ${type}`);
             }
             return response.json();
         })
         .catch(exc => {
             if (exc instanceof HTTPError) {
-                exc.logWhenReady();
-            }
-            else {
-                console.error(exc.name, exc.message);
+                exc.responseText()
+                    .then(text => {
+                        logException(
+                            urlStr, options, exc, `response body: ${text}`
+                        );
+                    });
+            } else {
+                logException(urlStr, options, exc);
             }
             return null;
-        })
+        });
 }
