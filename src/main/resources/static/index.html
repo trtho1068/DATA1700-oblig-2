@@ -1,92 +1,130 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="main.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DATA1700 3rd obligatory - Tickets</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <script type="module" src="main.js"></script>
 </head>
 <body>
-  <main>
-    <h1>Bestilling av kinobiletter</h1>
-    <!--
-    Blw form never submitted, still seems the logical container for our inputs
-    Name regex inspired by https://a-tokyo.medium.com/first-and-last-name-validation-for-forms-and-databases-d3edf29ad29d
-    Custom phone regex loosely accepts a variety of formats
-    Email validation delegated to browser using type=email
-    -->
-    <form id="ticket">
-      <ul>
-        <li>
-          <label for="movie">Film</label>
-          <select id="movie" name="movie" required>
-            <option value="" hidden>--Velg film her--</option>
-          </select>
-          <span id="error-movie" class="error" aria-live="polite"></span>
-        </li>
-        <li>
-          <label for="number">Antall</label>
-          <input type="text" inputmode="numeric" id="number" name="number"
-                 pattern="[1-9]\d*" maxlength="3" required>
-          <span id="error-number" class="error" aria-live="polite"></span>
-        </li>
-        <li>
-          <ul class="userdata">
+  <header class="d-flex align-items-center justify-content-center py-3 bg-dark
+                 text-light">
+    <h1>Tickets</h1>
+  </header>
+  <main class="container-fluid d-flex flex-column gap-5 py-5">
+    <div class="row">
+      <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 col-xxl-4
+                  offset-xxl-4">
+        <form class="shadow p-3" method="post" action="/tickets"
+              novalidate>
+          <!--
+          Name regex inspired by:
+          https://a-tokyo.medium.com/first-and-last-name-validation-for-forms-and-databases-d3edf29ad29d
+          -->
+          <ul class="list-unstyled d-flex flex-column gap-3">
+            <li class="align-self-center">
+              <h2>New ticket</h2>
+            </li>
             <li>
-              <label for="firstname">Fornavn</label>
-              <input type="text" id="firstname" name="firstname"
-                     pattern="^([a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+)*[.]{0,1}){1,2}$"
+              <label for="movie" class="form-label">Movie</label>
+              <select id="movie" class="form-select" name="movie" required>
+                <option value="" hidden>--Select movie--</option>
+              </select>
+              <span class="invalid-feedback" aria-live="polite"></span>
+            </li>
+            <li>
+              <label for="number" class="form-label">Number</label>
+              <input type="text" id="number" class="form-control"
+                     name="number" inputmode="numeric" pattern="^\s*\d+\s*$"
                      required>
-              <span id="error-firstname" class="error" aria-live="polite"></span>
+              <span class="invalid-feedback" aria-live="polite"></span>
             </li>
             <li>
-              <label for="lastname">Etternavn</label>
-              <input type="text" id="lastname" name="lastname"
-                     pattern="^([a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+)*[.]{0,1}){1,2}$"
+              <label for="firstname" class="form-label">Firstname</label>
+              <input type="text" id="firstname" class="form-control"
+                     name="firstname"
+                     pattern="^\s*([a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+)*[.]{0,1}){1,2}\s*$"
                      required>
-              <span id="error-lastname" class="error" aria-live="polite"></span>
+              <span class="invalid-feedback" aria-live="polite"></span>
             </li>
             <li>
-              <label for="phone-number">Telefonnr</label>
-              <input type="tel" id="phone-number" name="phone-number"
-                     pattern="^\s*(\d{1,4}[.\-\s]{0,1}){1,5}\d{1,4}\s*$">
-              <span id="error-phone-number" class="error" aria-live="polite"></span>
+              <label for="lastname" class="form-label">Lastname</label>
+              <input type="text" id="lastname" class="form-control"
+                     name="lastname"
+                     pattern="^\s*([a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+)*[.]{0,1}){1,2}$\s*"
+                     required>
+              <span class="invalid-feedback" aria-live="polite"></span>
             </li>
             <li>
-              <label for="email">Epost</label>
-              <input type="email" id="email" name="email" required>
-              <span id="error-email" class="error" aria-live="polite"></span>
+              <label for="phone-number" class="form-label">Phone number</label>
+              <input type="tel" id="phone-number" class="form-control"
+                     name="phoneNumber" pattern="^\s*[+]?(\d+[.\-\s]?\d+)+\s*$"
+                     required>
+              <span  class="invalid-feedback" aria-live="polite"></span>
+            </li>
+            <li class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" class="form-control"
+                     name="emailAddress" pattern="^\s*[^.]+@[^.]+(\.?\w+)*\s*$"
+                     required>
+              <span class="invalid-feedback" aria-live="polite"></span>
+            </li>
+            <li class="align-self-center">
+              <button type="submit" class="btn btn-primary btn-lg">
+                Buy ticket</button>
             </li>
           </ul>
-        </li>
-      </ul>
-    </form>
-    <button type="button" id="buy-ticket" form="ticket">Kjøp bilett</button>
-    <h2>Alle billetter</h2>
-    <table>
-      <caption>Alle dine billetter</caption>
-      <colgroup>
-        <col>
-        <col>
-        <col>
-        <col>
-        <col>
-        <col>
-      </colgroup>
-      <thead>
-        <tr>
-          <th scope="col">Film</th>
-          <th scope="col">Antall</th>
-          <th scope="col">Fornavn</th>
-          <th scope="col">Etternavn</th>
-          <th scope="col">Telefonnr</th>
-          <th scope="col">Epost</th>
-        </tr>
-      </thead>
-      <tbody id="all-tickets" aria-live="polite">
-      </tbody>
-    </table>
-    <button id="delete-tickets">Slett alle billettene</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-10 offset-lg-1 col-xxl-8 offset-xxl-2
+                 d-flex flex-column gap-3">
+        <h3 class="text-center fw-lighter">All your tickets</h3>
+        <div class="table-responsive">
+          <table class="table table-sm table-striped text-center fw-lighter">
+            <caption>All your tickets</caption>
+            <colgroup>
+              <col>
+              <col>
+              <col>
+              <col>
+              <col>
+              <col>
+            </colgroup>
+            <thead>
+            <tr>
+              <th scope="col">Movie</th>
+              <th scope="col">Number</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">Lastname</th>
+              <th scope="col">Phone number</th>
+              <th scope="col">Email</th>
+            </tr>
+            </thead>
+            <tbody aria-live="polite"></tbody>
+          </table>
+        </div>
+        <button id="delete-tickets" class="btn btn-secondary align-self-center">
+          Delete all tickets
+        </button>
+      </div>
+    </div>
   </main>
+  <footer class="d-flex align-items-center justify-content-center border-top
+                 py-3 text-body-secondary fw-lighter">
+    <ul class="list-unstyled d-flex flex-column align-items-center">
+      <li>
+        <a class="text-reset" href="mailto:trtho1068@oslomet.no">
+          trtho1068@oslomet.no</a>
+      </li>
+      <li>
+        <a class="text-reset"
+           href="https://github.com/trtho1068/DATA1700-oblig-2">GitHub repo</a>
+      </li>
+    </ul>
+  </footer>
 </body>
 </html>

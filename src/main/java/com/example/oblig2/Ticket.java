@@ -7,6 +7,7 @@ public class Ticket {
     @NotEmpty
     private String movie;
 
+    @NotNull
     @Min(1)
     @Max(100)
     private Integer number;
@@ -21,7 +22,7 @@ public class Ticket {
     )
     private String lastname;
 
-    @Pattern(regexp = "^\\s*(\\d{1,4}[.\\-\\s]{0,1}){1,5}\\d{1,4}\\s*$")
+    @Pattern(regexp = "[+]?(\\d+[.\\-\\s]?\\d+)+")
     private String phoneNumber;
 
     @Email

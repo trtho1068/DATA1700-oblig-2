@@ -1,6 +1,9 @@
 package com.example.oblig2;
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,15 +13,22 @@ import java.util.List;
 public class TicketController {
     private final ArrayList<Ticket> tickets = new ArrayList<>();
 
-    @PostMapping( "/tickets")
-    public List<Ticket> addTicket(@Valid @RequestBody Ticket ticket) {
+    @PostMapping(
+        value="/tickets",
+        consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Ticket> addTicket(@Valid Ticket ticket) {
         tickets.add(ticket);
-        return tickets;
+        return new ResponseEntity<>(ticket, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/tickets")
-    public List<Ticket> deleteTickets() {
+    @DeleteMapping(
+        value ="/tickets",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<List<Ticket>> deleteTickets() {
         tickets.clear();
-        return tickets;
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
 }
