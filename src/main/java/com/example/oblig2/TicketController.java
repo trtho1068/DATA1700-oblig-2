@@ -15,7 +15,8 @@ public class TicketController {
 
     @PostMapping(
         value="/tickets",
-        consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+        consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
+                    MediaType.APPLICATION_FORM_URLENCODED_VALUE},
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Ticket> addTicket(@Valid Ticket ticket) {
