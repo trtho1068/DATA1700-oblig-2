@@ -7,7 +7,14 @@
 
 
 import {request} from "./request.js";
-import {GroupValidator} from "./validate.js";
+import {getValidators, ValidatorGroup} from "./validate.js";
+
+
+const MOVIES_PATH = "/movies";
+const TICKETS_PATH = "/tickets";
+
+// bootstrap scopes css :invalid and :valid to parent .was-validated
+const BS_CSS_VALIDITY_SCOPE = "was-validated";
 
 
 function trimFormData(formData) {
@@ -44,19 +51,13 @@ function clearTableBody(tableBody) {
 
 
 export default class App {
-    static moviesPath = "/movies";
-    static ticketsPath = "/tickets";
-    // bootstrap scopes css :invalid and :valid to parent .was-validated
-    static bsWasValidated = "was-validated";
-
-    static getOutputElem(inputElem) {
-        return document.querySelector(`#${inputElem.id} ~ .invalid-feedback`);
-    }
-
     constructor() {
         this.form = document.querySelector("form");
-        this.formValidator = GroupValidator.forForm(
-            this.form, App.getOutputElem
+        this.validators = new ValidatorGroup(
+            ...getValidators(
+                this.form,
+                e => document.querySelector(`#${e.id} ~ .invalid-feedback`)
+            )
         );
         this.tableBodyTickets = document.querySelector("tbody");
     }
@@ -64,24 +65,24 @@ export default class App {
     handleValidForm() {
         let formData = new FormData(this.form);
         trimFormData(formData);
-        request(App.ticketsPath, {method: "POST", body: formData})
+        request(TICKETS_PATH, {method: "POST", body: formData})
             .then(ticket => {
                 addTableRow(this.tableBodyTickets, ticket);
-                this.formValidator.stopValidation();
-                this.form.classList.remove(App.bsWasValidated);
+                this.validators.stopLiveUpdates();
+                this.form.classList.remove(BS_CSS_VALIDITY_SCOPE);
                 this.form.reset();
             });
     }
 
     handleInvalidForm() {
-        this.formValidator.ensureValidation();
+        this.validators.startLiveUpdates();
         // classList.add omits already present tokens
-        this.form.classList.add(App.bsWasValidated);
+        this.form.classList.add(BS_CSS_VALIDITY_SCOPE);
     }
 
     handleFormSubmit(event) {
         event.preventDefault();
-        if (this.form.checkValidity()) {
+        if (this.validators.checkValidity()) {
             this.handleValidForm();
         } else {
             this.handleInvalidForm();
@@ -89,7 +90,7 @@ export default class App {
     }
 
     handleDeleteTickets(event) {
-        request(App.ticketsPath, {method: "DELETE"})
+        request(TICKETS_PATH, {method: "DELETE"})
             .then(tickets => {
                 if (tickets !== null) {
                     if (tickets.length === 0) {
@@ -105,7 +106,7 @@ export default class App {
     }
 
     run() {
-        request(App.moviesPath, {method: "GET"})
+        request(MOVIES_PATH, {method: "GET"})
             .then(movies => {
                 if (movies !== null) {
                     let select = document.querySelector("#movie");
