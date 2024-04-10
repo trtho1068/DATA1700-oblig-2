@@ -67,10 +67,12 @@ export default class App {
         trimFormData(formData);
         request(TICKETS_PATH, {method: "POST", body: formData})
             .then(ticket => {
-                addTableRow(this.tableBodyTickets, ticket);
-                this.validators.stopLiveUpdates();
-                this.form.classList.remove(BS_CSS_VALIDITY_SCOPE);
-                this.form.reset();
+                if (ticket !== null) {
+                    addTableRow(this.tableBodyTickets, ticket);
+                    this.validators.stopLiveUpdates();
+                    this.form.classList.remove(BS_CSS_VALIDITY_SCOPE);
+                    this.form.reset();
+                }
             });
     }
 
