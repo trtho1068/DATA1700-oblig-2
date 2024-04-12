@@ -1,4 +1,4 @@
-# DATA 1700 2nd obligatory exercise
+# DATA 1700 3rd obligatory exercise
 A dummy application simulating ticket ordering with
 both client and server side input validation, but without
 persistent ticket storage.

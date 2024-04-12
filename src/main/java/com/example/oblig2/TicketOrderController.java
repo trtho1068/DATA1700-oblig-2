@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class TicketController {
-    private final ArrayList<Ticket> tickets = new ArrayList<>();
+public class TicketOrderController {
+    private final ArrayList<TicketOrder> tickets = new ArrayList<>();
 
     @PostMapping(
         value="/tickets",
@@ -19,7 +19,7 @@ public class TicketController {
                     MediaType.APPLICATION_FORM_URLENCODED_VALUE},
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Ticket> addTicket(@Valid Ticket ticket) {
+    public ResponseEntity<TicketOrder> addTicket(@Valid TicketOrder ticket) {
         tickets.add(ticket);
         return new ResponseEntity<>(ticket, HttpStatus.CREATED);
     }
@@ -28,7 +28,7 @@ public class TicketController {
         value ="/tickets",
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<List<Ticket>> deleteTickets() {
+    public ResponseEntity<List<TicketOrder>> deleteTickets() {
         tickets.clear();
         return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
