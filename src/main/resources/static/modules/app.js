@@ -1,13 +1,8 @@
-/*
-*  The core client side app.
-*  Extracting this into its own module gives me a dead simple entry point,
-*  and a structure that makes somewhat sense in my head, at the expense of
-*  a few extra lines of code.
-*/
+// The client side application core.
 
 
 import {request} from "./request.js";
-import {getValidators, ValidatorGroup} from "./validate.js";
+import {getValidators, PATTERN_MISMATCH, ValidatorGroup} from "./validate.js";
 
 
 const MOVIES_PATH = "/movies";
@@ -53,6 +48,7 @@ function clearTableBody(tableBody) {
 export default class App {
     constructor() {
         this.form = document.querySelector("form");
+        this.form.noValidate = true;
         this.validators = new ValidatorGroup(
             ...getValidators(
                 this.form,
@@ -60,6 +56,57 @@ export default class App {
             )
         );
         this.tableBodyTickets = document.querySelector("tbody");
+
+        let numberValidator = this.validators.getValidator("numberOfTickets");
+        let firstNameValidator = this.validators.getValidator("firstName");
+        let lastNameValidator = this.validators.getValidator("lastName");
+
+        numberValidator.setConstraintErrorMessage(
+            PATTERN_MISMATCH, "please enter a positive number"
+        );
+        numberValidator.setConstraint(
+            "numberTooLow",
+            validationContext => validationContext.value >= 1,
+            "Must order at least 1 ticket"
+        );
+        numberValidator.setConstraint(
+            "numberTooHigh",
+            validationContext => validationContext.value <= 100,
+            "Sorry, our max capacity is 100"
+        );
+
+        firstNameValidator.setConstraintErrorMessage(
+            PATTERN_MISMATCH,
+            "Apologies, we failed to validate your name, we hope it is a typo?"
+        )
+        lastNameValidator.setConstraintErrorMessage(
+            PATTERN_MISMATCH,
+            "Apologies, we failed to validate your name, we hope it is a typo?"
+        )
+    }
+
+    setErrorMessageVisible(validator, visible) {
+        let parentElem = validator.inputElem.parentElement;
+        if (visible) {
+            parentElem.classList.add(BS_CSS_VALIDITY_SCOPE);
+        } else {
+            parentElem.classList.remove(BS_CSS_VALIDITY_SCOPE);
+        }
+    }
+
+    startValidation() {
+        for (let validator of this.validators) {
+            validator.inputElem.addEventListener(
+                "blur", event => {
+                    validator.validate();
+                    this.setErrorMessageVisible(validator, true);
+                })
+            validator.inputElem.addEventListener(
+                "focus", event => {
+                    this.setErrorMessageVisible(validator, false);
+                }
+            )
+        }
     }
 
     handleValidForm() {
@@ -68,18 +115,20 @@ export default class App {
         request(TICKETS_PATH, {method: "POST", body: formData})
             .then(ticket => {
                 if (ticket !== null) {
-                    addTableRow(this.tableBodyTickets, ticket);
-                    this.validators.stopLiveUpdates();
-                    this.form.classList.remove(BS_CSS_VALIDITY_SCOPE);
+                    for (let validator of this.validators) {
+                        this.setErrorMessageVisible(validator, false);
+                    }
                     this.form.reset();
+                    addTableRow(this.tableBodyTickets, ticket);
                 }
             });
     }
 
     handleInvalidForm() {
-        this.validators.startLiveUpdates();
-        // classList.add omits already present tokens
-        this.form.classList.add(BS_CSS_VALIDITY_SCOPE);
+        for (let validator of this.validators) {
+            validator.validate();
+            this.setErrorMessageVisible(validator, true);
+        }
     }
 
     handleFormSubmit(event) {
@@ -115,6 +164,7 @@ export default class App {
                     movies.forEach(movie => addOption(select, movie, movie));
                 }
             });
+        this.startValidation();
 
         this.form.addEventListener("submit", event => {
             this.handleFormSubmit(event);
