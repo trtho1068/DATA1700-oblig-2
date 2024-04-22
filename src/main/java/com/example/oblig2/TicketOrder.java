@@ -1,15 +1,17 @@
 package com.example.oblig2;
 
-
 import jakarta.validation.constraints.*;
 
+
 public class TicketOrder {
-    @NotBlank
-    private String movie;
+    private Integer id;
+
+    @NotNull
+    private Integer movieId;
 
     @NotNull
     @Min(1)
-    @Max(100)
+    @Max(20)
     private Integer numberOfTickets;
 
     @NotBlank
@@ -30,16 +32,18 @@ public class TicketOrder {
 
     @NotBlank
     @Email
+    @Pattern(regexp = "john@doe.com")
     private String emailAddress;
 
     public TicketOrder() {
     }
 
     public TicketOrder(
-        String movie, Integer numberOfTickets, String firstName,
+        Integer id, Integer movieId, Integer numberOfTickets, String firstName,
         String lastName, String phoneNumber, String emailAddress
     ) {
-        this.movie = movie;
+        this.id = id;
+        this.movieId = movieId;
         this.numberOfTickets = numberOfTickets;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,12 +51,32 @@ public class TicketOrder {
         this.emailAddress = emailAddress;
     }
 
-    public String getMovie() {
-        return movie;
+    public TicketOrder(
+        Integer movieId, Integer numberOfTickets, String firstName,
+        String lastName, String phoneNumber, String emailAddress
+    ) {
+        this.movieId = movieId;
+        this.numberOfTickets = numberOfTickets;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
     }
 
-    public void setMovie(String movie) {
-        this.movie = movie;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
     public Integer getNumberOfTickets() {
@@ -93,5 +117,18 @@ public class TicketOrder {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "TicketOrder{" +
+            "id=" + id +
+            ", movieId=" + movieId +
+            ", numberOfTickets=" + numberOfTickets +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", phoneNumber='" + phoneNumber + '\'' +
+            ", emailAddress='" + emailAddress + '\'' +
+            '}';
     }
 }

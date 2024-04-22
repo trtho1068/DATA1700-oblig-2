@@ -170,6 +170,12 @@ class Validator {
             this.outputElem.textContent = message;
         }
     }
+
+    forceValidationMessage(message) {
+        // A convenience if server side validation fails with useful message
+        this.inputElem.setCustomValidity(message);
+        this.outputElem.textContent = message;
+    }
 }
 
 
