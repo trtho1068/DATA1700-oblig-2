@@ -11,7 +11,7 @@ public class TicketOrder {
 
     @NotNull
     @Min(1)
-    @Max(20)
+    @Max(100)
     private Integer numberOfTickets;
 
     @NotBlank
@@ -32,7 +32,6 @@ public class TicketOrder {
 
     @NotBlank
     @Email
-    @Pattern(regexp = "john@doe.com")
     private String emailAddress;
 
     public TicketOrder() {

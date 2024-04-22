@@ -32,24 +32,22 @@ function logError(error, url, options) {
 
 
 function request(url, options, reThrowErrors = false) {
-    return fetch(url, options)
-        .then(response => {
-            if (!response.ok) {
-                throw new ResponseNotOkError(response);
-            }
-            let type = response.headers.get("content-type");
-            if (type !== "application/json") {
-                throw new TypeError(`Expected json, got ${type}`);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            logError(error, url, options);
-            if (reThrowErrors) {
-                throw error;
-            }
-            return null;
-        });
+    return fetch(url, options).then(response => {
+        if (!response.ok) {
+            throw new ResponseNotOkError(response);
+        }
+        let type = response.headers.get("content-type");
+        if (type !== "application/json") {
+            throw new TypeError(`Expected json, got ${type}`);
+        }
+        return response.json();
+    }).catch(error => {
+        logError(error, url, options);
+        if (reThrowErrors) {
+            throw error;
+        }
+        return null;
+    });
 }
 
 

@@ -109,7 +109,7 @@ class Validator {
         this.inputElem = inputElem;
 
         if (!outputElem.ariaLive || outputElem.ariaLive === "off") {
-            console.warn(`${this} setting 'aria-live=polite' on output elem`);
+            console.warn(this, "setting 'aria-live=polite' on output elem");
             outputElem.ariaLive = "polite";
         }
         this.outputElem = outputElem;

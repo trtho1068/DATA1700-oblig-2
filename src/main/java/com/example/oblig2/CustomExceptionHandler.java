@@ -31,7 +31,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             );
             response.addFailedValidation(failedValidation);
             logger.warn(String.format("%s for %s", failedValidation, target));
-
         }
         return new ResponseEntity<>(response, headers, status);
     }
