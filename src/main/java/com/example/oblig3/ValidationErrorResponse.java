@@ -1,4 +1,4 @@
-package com.example.oblig2;
+package com.example.oblig3;
 
 import java.util.ArrayList;
 import java.util.List;

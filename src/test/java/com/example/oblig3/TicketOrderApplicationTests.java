@@ -1,10 +1,10 @@
-package com.example.oblig2;
+package com.example.oblig3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Oblig2ApplicationTests {
+class TicketOrderApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,4 +1,4 @@
-package com.example.oblig2;
+package com.example.oblig3;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;

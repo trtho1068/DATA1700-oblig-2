@@ -1,4 +1,4 @@
-package com.example.oblig2;
+package com.example.oblig3.movie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

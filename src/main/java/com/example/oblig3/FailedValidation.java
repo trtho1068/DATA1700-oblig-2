@@ -1,4 +1,4 @@
-package com.example.oblig2;
+package com.example.oblig3;
 
 
 public record FailedValidation(String fieldName, String message) {}

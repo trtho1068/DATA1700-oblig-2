@@ -1,4 +1,4 @@
-package com.example.oblig2;
+package com.example.oblig3.ticketorder;
 
 import jakarta.validation.constraints.*;
 
