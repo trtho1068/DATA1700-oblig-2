@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS Movie (
+    MovieId INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Title VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS TicketOrder (
+    OrderId INTEGER PRIMARY KEY AUTO_INCREMENT,
+    MovieId INTEGER,
+    NumberOfTickets SMALLINT,
+    FirstName VARCHAR(100),
+    LastName VARCHAR(100),
+    PhoneNumber VARCHAR(24),
+    EmailAddress VARCHAR(50),
+    FOREIGN KEY (MovieId) REFERENCES Movie (MovieId)
+);

@@ -11,9 +11,9 @@
   <script type="module" src="main.js"></script>
 </head>
 <body>
-  <header class="d-flex align-items-center justify-content-center py-3 bg-dark
+  <header class="d-flex align-items-center justify-content-center py-2 bg-dark
                  text-light">
-    <h1>Tickets</h1>
+    <h1>Ticket Orders</h1>
   </header>
   <main class="container-fluid d-flex flex-column gap-5 py-5">
     <div class="row">
@@ -26,28 +26,32 @@
           -->
           <ul class="list-unstyled d-flex flex-column gap-3">
             <li class="align-self-center">
-              <h2>Buy Tickets</h2>
+              <h2>New Order</h2>
             </li>
             <li>
               <label for="movie" class="form-label">Movie</label>
-              <select id="movie" class="form-select w-50" name="movie" required>
+              <select id="movie" class="form-select w-50"
+                      name="movieId" required>
                 <option value="" hidden>--Select movie--</option>
               </select>
               <span class="invalid-feedback" aria-live="polite"></span>
             </li>
             <li>
               <label for="number" class="form-label">Number of Tickets</label>
-              <input type="text" id="number" class="form-control w-25"
+              <input type="text" id="number"
+                     class="form-control w-25"
                      name="numberOfTickets" inputmode="numeric"
-                     pattern="\d{1,3}" maxlength="3" required>
+                     pattern="\d{1,3}" maxlength="3" required
+                     aria-describedby="form-text-nt">
               <span class="invalid-feedback" aria-live="polite"></span>
-              <p class="form-text">
+              <p id="form-text-nt" class="form-text">
                 A number in range 1 - 100.
               </p>
             </li>
             <li>
               <label for="firstname" class="form-label">First Name</label>
-              <input type="text" id="firstname" class="form-control"
+              <input type="text" id="firstname"
+                     class="form-control"
                      name="firstName"
                      pattern=" *[a-zA-Z\xC0-\uFFFF]+([ \-']?[a-zA-Z\xC0-\uFFFF]+){0,2}[.]? *"
                      required>
@@ -55,7 +59,8 @@
             </li>
             <li>
               <label for="lastname" class="form-label">Last Name</label>
-              <input type="text" id="lastname" class="form-control"
+              <input type="text" id="lastname"
+                     class="form-control"
                      name="lastName"
                      pattern=" *[a-zA-Z\xC0-\uFFFF]+([ \-']?[a-zA-Z\xC0-\uFFFF]+){0,2}[.]? *"
                      required>
@@ -63,25 +68,29 @@
             </li>
             <li>
               <label for="phone-number" class="form-label">Phone Number</label>
-              <input type="tel" id="phone-number" class="form-control w-50"
+              <input type="tel" id="phone-number"
+                     class="form-control w-50"
                      name="phoneNumber"
                      pattern=" *[0-9]{2}[0-9 -.]*[0-9]{2} *"
-                     maxlength="24" required>
+                     maxlength="24" required
+                     aria-describedby="form-text-pn">
               <span  class="invalid-feedback" aria-live="polite"></span>
-              <p class="form-text" aria-describedby="phone-number">
+              <p id="form-text-pn" class="form-text"
+                 aria-describedby="phone-number">
                 Must begin and end with 2 digits, otherwise you're free to mix
                 it up with space, dot and hyphen. Max 24 characters.
               </p>
             </li>
             <li class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <input type="email" id="email" class="form-control"
+              <input type="email" id="email"
+                     class="form-control"
                      name="emailAddress" required>
               <span class="invalid-feedback" aria-live="polite"></span>
             </li>
             <li class="align-self-center">
-              <button type="submit" class="btn btn-primary btn-lg">
-                Buy Tickets</button>
+              <button type="submit" class="btn btn-primary">
+                Add Order</button>
             </li>
           </ul>
         </form>
@@ -90,10 +99,10 @@
     <div class="row">
       <div class="col-lg-10 offset-lg-1 col-xxl-8 offset-xxl-2
                  d-flex flex-column gap-3">
-        <h3 class="text-center fw-lighter">All your orders</h3>
+        <h3 class="text-center fw-lighter">All orders</h3>
         <div class="table-responsive">
           <table class="table table-sm table-striped text-center fw-lighter">
-            <caption>All your orders</caption>
+            <caption>All orders</caption>
             <colgroup>
               <col>
               <col>
@@ -104,19 +113,20 @@
             </colgroup>
             <thead>
             <tr>
-              <th scope="col">Movie</th>
+              <th scope="col">Movie Title</th>
               <th scope="col">Number of Tickets</th>
               <th scope="col">First Name</th>
               <th scope="col">Last Name</th>
               <th scope="col">Phone Number</th>
               <th scope="col">Email</th>
+              <th scope="col"></th>
             </tr>
             </thead>
             <tbody aria-live="polite"></tbody>
           </table>
         </div>
-        <button id="delete-tickets" class="btn btn-secondary align-self-center">
-          Delete all orders
+        <button id="delete-tickets" class="btn btn-secondary align-self-end">
+          Delete all
         </button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import App from "./modules/app.js";
+import TicketOrderClient from "./modules/client.js";
 
-let app = new App();
-app.run();
+let ticketOrderClient = new TicketOrderClient(location);
+ticketOrderClient.run();
