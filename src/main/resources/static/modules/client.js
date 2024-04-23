@@ -131,7 +131,7 @@ export default class TicketOrderClient {
         let lastNameValidator = this.validators.getValidator("lastName");
 
         numberValidator.setConstraintErrorMessage(
-            PATTERN_MISMATCH, "please enter a positive number"
+            PATTERN_MISMATCH, "Please enter a positive number"
         );
         numberValidator.setConstraint(
             "numberTooLow",
@@ -150,7 +150,7 @@ export default class TicketOrderClient {
         )
         lastNameValidator.setConstraintErrorMessage(
             PATTERN_MISMATCH,
-            "Apologies, we failed to validate your name, we hope it is a typo?"
+            "Apologies, failed to validate your name, we hope it is a typo?"
         )
     }
 
