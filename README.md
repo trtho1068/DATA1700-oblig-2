@@ -1,4 +1,8 @@
 # DATA 1700 3rd obligatory exercise
+
+> [!IMPORTANT]
+> [The requested video is found here.](https://youtu.be/YUEVcP0p__o) 
+
 A dummy application that reads, creates and deletes database records
 based on user input.
 
